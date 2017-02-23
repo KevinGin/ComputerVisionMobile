@@ -62,6 +62,7 @@ export default class ComputerVisionMobile extends Component {
           //iOS will always give 1280x720
           //Most Android will sive the same, but might need to edit on Cloudinary for rogue Android cameras
           captureQuality={"720p"}>
+          <View style={styles.space}></View>
           <View style={styles.outline}></View>
           <Text style={styles.capture} onPress={this.takePicture.bind(this)}>[CAPTURE]</Text>
         </Camera>
@@ -89,10 +90,16 @@ const styles = StyleSheet.create({
     padding: 10,
     margin: 40
   },
+  space: {
+    flex: 1
+  },
   outline: {
-    flex: 1,
     justifyContent:'center',
     alignItems:'center',
-    backgroundColor: 'skyblue'
+    borderColor:'skyblue',
+    borderRadius: 10,
+    borderWidth: 3,
+    width: 300,
+    flex: 5
   }
 });
