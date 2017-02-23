@@ -18,7 +18,8 @@ export default class ComputerVisionMobile extends Component {
       .then((data) => {
         console.log('picture taken')
         console.log(data)
-        context.uploadImage(data.path);
+        // DEVNOTE: commented out during dev so don't make unnecessary API requests
+        // context.uploadImage(data.path);
       })
       .catch(err => console.error(err));
   }
@@ -56,7 +57,12 @@ export default class ComputerVisionMobile extends Component {
             this.camera = cam;
           }}
           style={styles.preview}
-          aspect={Camera.constants.Aspect.fill}>
+          //aspect as fit crops viewfinder, helps ensure uploaded image has right aspect ratio
+          aspect={Camera.constants.Aspect.fit}
+          //iOS will always give 1280x720
+          //Most Android will sive the same, but might need to edit on Cloudinary for rogue Android cameras
+          captureQuality={"720p"}>
+          <View style={styles.outline}></View>
           <Text style={styles.capture} onPress={this.takePicture.bind(this)}>[CAPTURE]</Text>
         </Camera>
       </View>
@@ -82,5 +88,11 @@ const styles = StyleSheet.create({
     color: '#000',
     padding: 10,
     margin: 40
+  },
+  outline: {
+    flex: 1,
+    justifyContent:'center',
+    alignItems:'center',
+    backgroundColor: 'skyblue'
   }
 });
