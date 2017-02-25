@@ -3,15 +3,28 @@ import {
   Dimensions,
   StyleSheet,
   Text,
-  TouchableHighlight,
-  View
+  View,
+  Picker,
 } from 'react-native';
 import Camera from 'react-native-camera';
+const axios = require('axios');
 var CryptoJS = require('crypto-js');
 var Cloudinary = require('../config/cloudinary.js')
 
+const Item = Picker.item;
+
 export default class ComputerVisionMobile extends Component {
-  
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      postMode: 'TeacherKey',    // key or test
+      teacherID: 1,       // hard-coded for now
+      courseID: 1         // hard-coded for now
+    };
+  }
+
+
   takePicture() {
     var context = this;
     this.camera.capture()
@@ -19,7 +32,7 @@ export default class ComputerVisionMobile extends Component {
         console.log('picture taken')
         console.log(data)
         // DEVNOTE: commented out during dev so don't make unnecessary API requests
-        context.uploadImage(data.path);
+        // context.uploadImage(data.path);
       })
       .catch(err => console.error(err));
   }
@@ -49,6 +62,37 @@ export default class ComputerVisionMobile extends Component {
     xhr.send(formdata);
   }
 
+  postToServer() {
+    var context = this;
+    console.log('posting to server ------------------------')
+    console.log(context.state)
+    console.log(context.state.teacherID);
+    var data = {
+      url: 'http://res.cloudinary.com/dn4vqx2gu/image/upload/v1487892182/p6ybu5bjev1nnfkpebcc.jpg',
+      TeachersID: context.state.teacherID,
+      ClassesID: this.state.classID
+    }
+    var config = {
+      method: 'post',
+      data: data
+    }
+    if (this.state.postMode === 'key') {
+      config.url = 'http://10.7.24.223:8080/teacher/addAnswerKey'
+    } else {
+      config.url = 'foobarr'  // KG update after Benz pull request 
+    }
+    axios(config)
+      .then(() => console.log('posted', config.data.TeachersID))
+      .catch(() => console.log('catch called'))
+  }
+
+  handlePickerChange(value) {
+    console.log('pickerchanged')
+    this.setState({
+      postMode: value
+    })
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -62,9 +106,15 @@ export default class ComputerVisionMobile extends Component {
           //iOS will always give 720x1280
           //Most Android will sive the same, but might need to edit on Cloudinary for rogue Android cameras
           captureQuality={"720p"}>
-          <View style={styles.space}></View>
+          <Picker
+            style={styles.picker}
+            selectedValue= {this.state.postMode}
+            onValueChange= {this.handlePickerChange.bind(this)}>
+            <Item label="Upload Teacher Key" value="TeacherKey" />
+            <Item label="Upload Student Test" value="StudentTest" />
+          </Picker>
           <View style={styles.outline}></View>
-          <Text style={styles.capture} onPress={this.takePicture.bind(this)}>[CAPTURE]</Text>
+          <Text style={styles.capture} onPress={this.postToServer.bind(this)}>[CAPTURE]</Text>
         </Camera>
       </View>
     );
@@ -90,9 +140,6 @@ const styles = StyleSheet.create({
     padding: 10,
     margin: 40
   },
-  space: {
-    flex: 1
-  },
   outline: {
     justifyContent:'center',
     alignItems:'center',
@@ -101,5 +148,9 @@ const styles = StyleSheet.create({
     borderWidth: 3,
     width: 280,
     flex: 5
+  },
+  picker: {
+    flex: 1,
+    width: 240,
   }
 });
