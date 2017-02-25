@@ -30,15 +30,15 @@ export default class ComputerVisionMobile extends Component {
     this.camera.capture()
       .then((data) => {
         console.log('picture taken')
-        console.log(data)
         // DEVNOTE: commented out during dev so don't make unnecessary API requests
-        // context.uploadImage(data.path);
+        context.uploadImage(data.path, context.postToServer.bind(context));
       })
       .catch(err => console.error(err));
   }
 
-  uploadImage(uri) {
+  uploadImage(uri, postToServer) {
     console.log('uploadImage called')
+    var context = this;
     // DEV NOTE: On future iterations, we can upload without an API Key (and without hashing it with our secret)
     // But in order to do that, we'll need to set up a Cloudinary PRESET for us to upload to.
     let timestamp = (Date.now() / 1000 | 0).toString();
@@ -51,24 +51,32 @@ export default class ComputerVisionMobile extends Component {
 
     let xhr = new XMLHttpRequest();
     xhr.open('POST', upload_url);
-    xhr.onload = () => {
-      console.log(xhr);
+    xhr.onload = (data) => {
+      console.log('onload called')
+      // callback is postToServer
+      postToServer(data)
     };
     let formdata = new FormData();
     formdata.append('file', {uri: uri, type: 'image/jpg', name: 'upload.jpg'});
     formdata.append('timestamp', timestamp);
     formdata.append('api_key', api_key);
     formdata.append('signature', signature);
+    console.log('all form data is fine')
     xhr.send(formdata);
+    console.log('sent')
   }
 
-  postToServer() {
+  postToServer(data) {
     var context = this;
     console.log('posting to server ------------------------')
-    console.log(context.state)
-    console.log(context.state.teacherID);
+
+    var responseString = data.target._response;
+    var responseObject = JSON.parse(responseString);
+    var imageURL = responseObject.url
+
     var data = {
-      url: 'http://res.cloudinary.com/dn4vqx2gu/image/upload/v1487892182/p6ybu5bjev1nnfkpebcc.jpg',
+      // url: 'http://res.cloudinary.com/dn4vqx2gu/image/upload/v1487892182/p6ybu5bjev1nnfkpebcc.jpg',
+      url: imageURL,
       TeachersID: context.state.teacherID,
       ClassesID: this.state.classID
     }
@@ -76,7 +84,7 @@ export default class ComputerVisionMobile extends Component {
       method: 'post',
       data: data
     }
-    if (this.state.postMode === 'key') {
+    if (this.state.postMode === 'TeacherKey') {
       config.url = 'http://10.7.24.223:8080/teacher/addAnswerKey'
     } else {
       config.url = 'foobarr'  // KG update after Benz pull request 
@@ -114,7 +122,7 @@ export default class ComputerVisionMobile extends Component {
             <Item label="Upload Student Test" value="StudentTest" />
           </Picker>
           <View style={styles.outline}></View>
-          <Text style={styles.capture} onPress={this.postToServer.bind(this)}>[CAPTURE]</Text>
+          <Text style={styles.capture} onPress={this.takePicture.bind(this)}>[CAPTURE]</Text>
         </Camera>
       </View>
     );
