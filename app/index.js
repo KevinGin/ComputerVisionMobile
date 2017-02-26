@@ -37,7 +37,7 @@ export default class ComputerVisionMobile extends Component {
   }
 
   uploadImage(uri, postToServer) {
-    console.log('uploadImage called')
+    console.log('uploading image to Cloudinary -------------------')
     var context = this;
     // DEV NOTE: On future iterations, we can upload without an API Key (and without hashing it with our secret)
     // But in order to do that, we'll need to set up a Cloudinary PRESET for us to upload to.
@@ -61,16 +61,14 @@ export default class ComputerVisionMobile extends Component {
     formdata.append('timestamp', timestamp);
     formdata.append('api_key', api_key);
     formdata.append('signature', signature);
-    console.log('all form data is fine')
     xhr.send(formdata);
-    console.log('sent')
   }
 
-  postToServer(data) {
+  postToServer(cloudinaryData) {
     var context = this;
     console.log('posting to server ------------------------')
 
-    var responseString = data.target._response;
+    var responseString = cloudinaryData.target._response;
     var responseObject = JSON.parse(responseString);
     var imageURL = responseObject.url
 
@@ -80,17 +78,21 @@ export default class ComputerVisionMobile extends Component {
       TeachersID: context.state.teacherID,
       ClassesID: this.state.classID
     }
+
     var config = {
       method: 'post',
       data: data
     }
+
     if (this.state.postMode === 'TeacherKey') {
       config.url = 'http://10.7.24.223:8080/teacher/addAnswerKey'
     } else {
+      console.log('THIS WILL NOT POST BECAUSE URL NOT ADDED-------------------')
       config.url = 'foobarr'  // KG update after Benz pull request 
     }
+
     axios(config)
-      .then(() => console.log('posted', config.data.TeachersID))
+      .then(() => console.log('posted successfully', config.data.TeachersID))
       .catch(() => console.log('catch called'))
   }
 
@@ -100,6 +102,20 @@ export default class ComputerVisionMobile extends Component {
       postMode: value
     })
   }
+
+  // leave in for development/debugging. Good funciton for testing Android connection to localhost over wifi.
+  // serverTest() {
+  //   var data = {"url":"http://res.cloudinary.com/dn4vqx2gu/image/upload/v1487892182/p6ybu5bjev1nnfkpebcc.jpg","TeachersID": 1, "ClassesID": 1}
+  //   var config = {
+  //     method: 'post',
+  //     data: data,
+  //     url: 'http://10.7.24.223:8080/teacher/addAnswerKey'
+  //   }
+  //   console.log('running serverTest')
+  //   axios(config)
+  //     .then(() => console.log('posted', config.data.TeachersID))
+  //     .catch(() => console.log('catch called'))
+  // }
 
   render() {
     return (
