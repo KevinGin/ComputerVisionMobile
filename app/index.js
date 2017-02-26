@@ -85,11 +85,25 @@ export default class ComputerVisionMobile extends Component {
     }
 
     if (this.state.postMode === 'TeacherKey') {
-      config.url = 'http://10.7.24.223:8080/teacher/addAnswerKey'
+      config.url = 'http://10.7.24.223:8080/teacher/addAnswerKey'  // URL for dev
+      // 10.7.24.223 dev URL
+      // config.url = 'http://10.7.25.12:8080/teacher/addAnswerKey'  // URL for demo
     } else {
-      console.log('THIS WILL NOT POST BECAUSE URL NOT ADDED-------------------')
-      config.url = 'foobarr'  // KG update after Benz pull request 
+      config.url = 'http://10.7.24.223:8080/teacher/addTest'
     }
+
+
+//     {
+//   "username": "Rachel",
+//   "password": "password",
+//   "TeacherId": 1
+// }
+
+
+// {
+//   "username": "Ms. Frizzle",
+//   "password": "password"
+// }
 
     axios(config)
       .then(() => console.log('posted successfully', config.data.TeachersID))
