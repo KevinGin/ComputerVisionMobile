@@ -4,6 +4,7 @@ import { Router, Scene } from 'react-native-router-flux';
 import Landing from './Landing';
 import PageTwo from './PageTwo';
 import CameraView from './camera';
+import Signup from './Signup'
 
 export default class App extends Component {
   render() {
@@ -12,7 +13,7 @@ export default class App extends Component {
         <Scene key="root">
           <Scene key="CameraView" component={CameraView} title="Camera"  />
           <Scene key="Landing" component={Landing} title="Teacher's Pet: Student" initial={true}/>
-          <Scene key="PageTwo" component={PageTwo} title="PageTwo" />
+          <Scene key="Signup" component={Signup} title="Signup" />
         </Scene>
       </Router>
     )

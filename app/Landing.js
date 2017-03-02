@@ -20,11 +20,13 @@ export default class Landing extends Component {
                style={styles.photo} />
         <View style={styles.buttonContainer}>
         	<TouchableOpacity
-        	  style={styles.button}>
+        	  style={styles.button}
+            onPress= {Actions.CameraView}>
             <Text style={styles.buttonText}> Login</Text>
           </TouchableOpacity>
         	<TouchableOpacity
-            style={styles.button}>
+            style={styles.button}
+            onPress= {Actions.Signup}>
             <Text style={styles.buttonText}> Sign Up</Text>
           </TouchableOpacity>
         </View>
