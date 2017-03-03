@@ -168,13 +168,10 @@ export default class CameraView extends Component {
           //iOS will always give 720x1280
           //Most Android will sive the same, but might need to edit on Cloudinary for rogue Android cameras
           captureQuality={"720p"}>
-          <Picker
-            style={styles.picker}
-            selectedValue= {this.state.postMode}
-            onValueChange= {this.handlePickerChange.bind(this)}>
-            <Item label="Upload Teacher Key" value="TeacherKey" />
-            <Item label="Upload Student Test" value="StudentTest" />
-          </Picker>
+          <View style={styles.topBar}>
+            <Text> {this.props.username} </Text>
+          </View>
+          
           <View style={styles.outline}></View>
           <Text style={styles.capture} onPress={this.takePicture.bind(this)}>[CAPTURE]</Text>
         </Camera>
@@ -216,8 +213,7 @@ const styles = StyleSheet.create({
     width: 280,
     flex: 5
   },
-  picker: {
+  topBar: {
     flex: 1,
-    width: 240,
   }
 });

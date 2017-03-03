@@ -33,9 +33,6 @@ export default class Signup extends Component {
     var userData = this.state;
     var url = 'http://10.7.24.223:8080/auth/student/signup'
 
-    console.log(userData)
-    console.log(url)
-
     axios.post(url, userData)
     .then(function (response) {
       console.log('successful POST');
@@ -43,16 +40,16 @@ export default class Signup extends Component {
     })
     .catch(function (error) {
       // DEV: RENDER ERROR MESSAGE TO USER
+      console.log(error);
       console.log('error caught from post');
-      // console.log(error)
     });
   }
 
   navigateToCamera(response) {
-    console.log('called navigateToCamera')
-
-    Actions.CameraView();
-    console.log('past actions.Camera');
+    // console.log('navigateToCamera called')
+    // console.log(response.data);
+    var user = response.data;
+    Actions.CameraView({user: user});
   }
 
 
