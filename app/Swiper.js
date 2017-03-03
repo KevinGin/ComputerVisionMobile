@@ -13,19 +13,19 @@ var styles = {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#9DD6EB'
+    backgroundColor: '#85AF4B'
   },
   slide2: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#97CAE5'
+    backgroundColor: '#ADC986'
   },
   slide3: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#92BBD9'
+    backgroundColor: '#D3E2BD'
   },
   text: {
     color: '#fff',
@@ -34,12 +34,16 @@ var styles = {
   }
 }
 
-export default () => <Swiper style={styles.wrapper} height={Dimensions.get('window').height*.78} showsButtons>
+
+
+
+
+export default () => <Swiper style={styles.wrapper} height={Dimensions.get('window').height*.78} showsButtons autoplay>
   <View style={styles.slide1}>
     <Text style={styles.text}>Take Test.</Text>
   </View>
   <View style={styles.slide2}>
-    <Text style={styles.text}>Take A Photo.</Text>
+    <Text style={styles.text}>Take Photo.</Text>
   </View>
   <View style={styles.slide3}>
     <Text style={styles.text}>Get Results.</Text>
