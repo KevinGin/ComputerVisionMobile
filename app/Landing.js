@@ -21,7 +21,7 @@ export default class Landing extends Component {
         <View style={styles.buttonContainer}>
         	<TouchableOpacity
         	  style={styles.button}
-            onPress= {Actions.CameraView}>
+            onPress= {Actions.Login}>
             <Text style={styles.buttonText}> Login</Text>
           </TouchableOpacity>
         	<TouchableOpacity

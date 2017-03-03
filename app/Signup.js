@@ -73,7 +73,7 @@ export default class Signup extends Component {
         <Button
           style={styles.space}
           onPress={this.handleSubmit.bind(this)}
-          title="Submit"
+          title="Create Account"
           color="#841584"
           accessibilityLabel="Submit Username and Password"
         />
