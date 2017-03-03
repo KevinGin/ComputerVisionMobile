@@ -7,6 +7,8 @@ import {
   Button
 } from 'react-native';
 import { Actions } from 'react-native-router-flux';
+const axios = require('axios')
+
 // import PageTwo from './PageTwo';
 
 
@@ -15,17 +17,44 @@ export default class Signup extends Component {
     super(props);
     this.state = {
       username: '',
-      password: ''
+      password: '',
+      TeacherID: 1   //DevNote: TeacherID to be taken out after controller/db change.
     };
   }
 
   handleSubmit() {
-    console.log('SUBMIT HANDLER CALLED!')
+    console.log('handleSubmit')
+    var context = this;
+    this.registerUser(context.navigateToCamera); // good candidate to Promisify
   }
 
-  registerUser() {
+  registerUser(callback) {
     console.log('registerUser called')
+    var userData = this.state;
+    var url = 'http://10.7.24.223:8080/auth/student/signup'
+
+    console.log(userData)
+    console.log(url)
+
+    axios.post(url, userData)
+    .then(function (response) {
+      console.log('successful POST');
+      callback(response);
+    })
+    .catch(function (error) {
+      // DEV: RENDER ERROR MESSAGE TO USER
+      console.log('error caught from post');
+      // console.log(error)
+    });
   }
+
+  navigateToCamera(response) {
+    console.log('called navigateToCamera')
+
+    Actions.CameraView();
+    console.log('past actions.Camera');
+  }
+
 
   render() {
     return (
@@ -34,19 +63,22 @@ export default class Signup extends Component {
         <TextInput
           style={styles.input}
           placeholder="Username"
-          onTextChange={(text) => this.setState({username})}
+          onChangeText={(text) => this.setState({username: text})}
+          accessibilityLabel="Input Username"
         />
         <TextInput
           style={styles.input}
           placeholder="Password"
-          onTextChange={(text) => this.setState({password})}
+          onChangeText={(text) => this.setState({password: text})}
+          value={this.state.text}
+          accessibilityLabel="Input Password"
         />
         <Button
           style={styles.space}
-          onPress={this.handleSubmit}
+          onPress={this.handleSubmit.bind(this)}
           title="Submit"
           color="#841584"
-          accessibilityLabel="Learn more about this purple button"
+          accessibilityLabel="Submit Username and Password"
         />
         <View style={styles.submitButton}/>
       </View>

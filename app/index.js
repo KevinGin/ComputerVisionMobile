@@ -7,6 +7,7 @@ import CameraView from './camera';
 import Signup from './Signup'
 
 export default class App extends Component {
+  
   render() {
     return (
       <Router>
