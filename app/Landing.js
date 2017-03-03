@@ -8,7 +8,8 @@ import {
   Dimensions
 } from 'react-native';
 import { Actions } from 'react-native-router-flux';
-// import PageTwo from './PageTwo';
+import Swiper from './Swiper';
+
 
 
 export default class Landing extends Component {
@@ -16,8 +17,7 @@ export default class Landing extends Component {
     return (
       <View style={styles.container}>
       	<View style={styles.space}></View>
-      	<Image source={{uri: 'http://res.cloudinary.com/dn4vqx2gu/image/upload/v1487892182/p6ybu5bjev1nnfkpebcc.jpg'}}
-               style={styles.photo} />
+        <Swiper style={styles.swiper}></Swiper>
         <View style={styles.buttonContainer}>
         	<TouchableOpacity
         	  style={styles.button}
@@ -39,6 +39,9 @@ export default class Landing extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  swiper: {
+    height: 10
   },
   space: {
   	flex: 1,
