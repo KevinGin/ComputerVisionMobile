@@ -14,7 +14,7 @@ export default class App extends Component {
       <Router>
         <Scene key="root">
           <Scene key="CameraView" component={CameraView} title="Camera" hideNavBar />
-          <Scene key="Landing" component={Landing} title="Teacher's Pet: Student" initial={true}/>
+          <Scene key="Landing" component={Landing} title="Teacher's Pet: Student" hideNavBar initial={true}/>
           <Scene key="Signup" component={Signup} title="Signup" />
           <Scene key="Login" component={Login} title="Login" />
         </Scene>

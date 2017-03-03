@@ -16,13 +16,12 @@ export default class Landing extends Component {
   render() {
     return (
       <View style={styles.container}>
-      	<View style={styles.space}></View>
-        <Swiper style={styles.swiper}></Swiper>
+        <Swiper></Swiper>
         <View style={styles.buttonContainer}>
         	<TouchableOpacity
         	  style={styles.button}
             onPress= {Actions.Login}>
-            <Text style={styles.buttonText}> Login</Text>
+            <Text style={[styles.buttonText, styles.buttonTextLeft]}> Login</Text>
           </TouchableOpacity>
         	<TouchableOpacity
             style={styles.button}
@@ -57,11 +56,23 @@ const styles = StyleSheet.create({
   button: {
     flex: 1,
     color: 'red',
+    // flexDirection: 'column'
   },
 
   buttonText: {
     flex: 1,
-    color: 'black',
-    backgroundColor: 'lightgray'
+    color: '#666666',
+    backgroundColor: 'lightgray',
+    textAlign: 'center',
+    fontWeight: 'bold',
+    fontSize: 20,
+    paddingTop: 10
+
   },
+
+  buttonTextLeft: {
+    borderRightColor: '#666666',
+    borderRightWidth: 1
+  },
+
 });

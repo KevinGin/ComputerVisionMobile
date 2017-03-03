@@ -5,9 +5,11 @@ import {
   Dimensions,
 } from 'react-native'
 import Swiper from 'react-native-swiper'
+const { width, height } = Dimensions.get('window')
 
 var styles = {
   wrapper: {
+    top: 0
   },
   slide1: {
     flex: 1,
@@ -38,7 +40,7 @@ var styles = {
 
 
 
-export default () => <Swiper style={styles.wrapper} height={Dimensions.get('window').height*.78} showsButtons autoplay>
+export default () => <Swiper style={styles.wrapper} height={height*.86} showsButtons>
   <View style={styles.slide1}>
     <Text style={styles.text}>Take Test.</Text>
   </View>
