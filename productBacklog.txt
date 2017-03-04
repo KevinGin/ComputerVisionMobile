@@ -1,0 +1,5 @@
+1. Hide Password when user enters it
+2. RegEx on all user inputs
+3. Spinner Page
+4. Successful Upload Page
+5. Pencil images, multiple sizes
