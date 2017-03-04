@@ -161,13 +161,20 @@ export default class CameraView extends Component {
           </View>
           
           <View style={styles.outline}></View>
-          <Text style={styles.capture} onPress={this.takePicture.bind(this)}>[Upload Test]</Text>
+          <Text style={styles.capture} onPress={this.takePicture.bind(this)}>   [Upload]   </Text>
         </Camera>
         }
       </View>
     );
   }
 }
+
+// Color Scheme:
+// '#85AF4B'
+// '#ADC986'
+// '#D3E2BD'
+
+
 
 const styles = StyleSheet.create({
   container: {
@@ -186,16 +193,17 @@ const styles = StyleSheet.create({
   },
   capture: {
     flex: 0,
-    backgroundColor: '#fff',
+    backgroundColor: '#85AF4B',
     borderRadius: 5,
-    color: '#000',
+    color: 'white',
+    fontWeight: 'bold',
     padding: 10,
     margin: 40
   },
   outline: {
     justifyContent:'center',
     alignItems:'center',
-    borderColor:'skyblue',
+    borderColor:'#ADC986',
     borderRadius: 10,
     borderWidth: 3,
     width: 280,
