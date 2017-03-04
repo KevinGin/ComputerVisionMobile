@@ -5,7 +5,8 @@ import {
 	TextInput,
 	StyleSheet,
   TouchableOpacity,
-  Dimensions
+  Dimensions,
+  AsyncStorage
 } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 const axios = require('axios')
@@ -31,19 +32,30 @@ export default class Login extends Component {
   }
 
   loginUser(callback) {
-    console.log('registerUser called')
+    console.log('loginUser called')
     var userData = this.state;
     var url = 'http://10.7.24.223:8080/auth/student/login'
 
     axios.post(url, userData)
     .then(function (response) {
-      console.log('successful LOGIN');
-      callback(response);
+      var token = response.data.token
+      console.log(token)
+      AsyncStorage.setItem('@teachersPetToken', token, (err, data) => {
+        if (err) {
+          // DEV: Handle error storing token
+          console.log(err)
+        } else {
+          console.log('store token success')
+          console.log(data)
+          callback(response)
+        }
+      })
     })
     .catch(function (error) {
       // DEV: RENDER ERROR MESSAGE TO USER
-      console.log(error);
-      console.log('error caught from post');
+      // console.log(error);
+      console.log('error caught from post ----------------');
+      console.log(error)
     });
   }
 
