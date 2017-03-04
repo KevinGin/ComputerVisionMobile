@@ -5,6 +5,7 @@ import {
   Text,
   View,
   Picker,
+  AsyncStorage
 } from 'react-native';
 import Camera from 'react-native-camera';
 import Spinner from './spinner.js'
@@ -68,68 +69,63 @@ export default class CameraView extends Component {
     xhr.send(formdata);
   }
 
+
   postToServer(cloudinaryData) {
     var context = this;
     console.log('posting to server ------------------------')
+    // Fetch Web Token Asyc
+    AsyncStorage.getItem('@teachersPetToken', (err, token) => {
+      console.log('fetched ====> ')
+      console.log(token)
 
-    var responseString = cloudinaryData.target._response;
-    var responseObject = JSON.parse(responseString);
-    var imageURL = responseObject.url
+      var responseString = cloudinaryData.target._response;
+      var responseObject = JSON.parse(responseString);
+      var imageURL = responseObject.url
 
-    // DEV: hard-coded for DEV.
-    let hardCodedURL = 'http://res.cloudinary.com/dn4vqx2gu/image/upload/v1487892182/p6ybu5bjev1nnfkpebcc.jpg'
-
-
-    var data = {
-      // DEV: uncomment to hard-code URL
-      url: hardCodedURL,
-      // url: imageURL,
-      TeachersID: context.state.teacherID,
-      ClassesID: this.state.courseID
-    }
-
-    console.log('data  ===> ')
-    console.log(data);
-
-    var config = {
-      method: 'post',
-      data: data
-    }
-
-    if (this.state.postMode === 'TeacherKey') {
-      config.url = 'http://10.7.24.223:8080/teacher/addAnswerKey'  // URL for dev
-      // 10.7.24.223 dev URL
-      // config.url = 'http://10.7.25.12:8080/teacher/addAnswerKey'  // URL for demo
-    } else {
-      config.url = 'http://10.7.24.223:8080/teacher/addTest'
-    }
+      // DEV: hard-coded for DEV.
+      let hardCodedURL = 'http://res.cloudinary.com/dn4vqx2gu/image/upload/v1487892182/p6ybu5bjev1nnfkpebcc.jpg'
 
 
-//     {
-//   "username": "Rachel",
-//   "password": "password",
-//   "TeacherId": 1
-// }
+      var data = {
+        // DEV: uncomment to hard-code URL
+        url: hardCodedURL,
+        // url: imageURL,
+        TeachersID: context.state.teacherID,
+        ClassesID: this.state.courseID,
+        token: token
+      }
+
+      var config = {
+        method: 'post',
+        data: data,
+        url: 'http://10.7.24.223:8080/api/addTest'
+      }
 
 
-// {
-//   "username": "Ms. Frizzle",
-//   "password": "password"
-// }
-
-    axios(config)
-      .then(() => {
-        console.log('posted successfully', config.data.TeachersID)
-        context.setState({
-          spinner: false
+      axios(config)
+        .then((response) => {
+          console.log('posted successfully --------------------⁄')
+          console.log(response)
+          // DEV: DISPLAY SCORE
+          context.setState({
+            spinner: false
+          })
         })
-      })
-      .catch(() => {
-        console.log('catch called')
-        context.setState({
-          spinner: false
+        .catch((err) => {
+          console.log('catch called -------------------------')
+          console.log(err)
+          // DEV: DISPLAY ERROR MESSAGE
+          context.setState({
+            spinner: false
+          })
         })
-      })
+
+
+
+
+
+
+    });
   }
 
   handlePickerChange(value) {
@@ -139,19 +135,11 @@ export default class CameraView extends Component {
     })
   }
 
-  // leave in for development/debugging. Good funciton for testing Android connection to localhost over wifi.
-  // serverTest() {
-  //   var data = {"url":"http://res.cloudinary.com/dn4vqx2gu/image/upload/v1487892182/p6ybu5bjev1nnfkpebcc.jpg","TeachersID": 1, "ClassesID": 1}
-  //   var config = {
-  //     method: 'post',
-  //     data: data,
-  //     url: 'http://10.7.24.223:8080/teacher/addAnswerKey'
-  //   }
-  //   console.log('running serverTest')
-  //   axios(config)
-  //     .then(() => console.log('posted', config.data.TeachersID))
-  //     .catch(() => console.log('catch called'))
-  // }
+
+  fetch() {
+    console.log('fetch called')
+    AsyncStorage.getItem('@teachersPetToken', (err, data) => console.log(data));
+  }
 
   render() {
     return (
@@ -173,7 +161,7 @@ export default class CameraView extends Component {
           </View>
           
           <View style={styles.outline}></View>
-          <Text style={styles.capture} onPress={this.takePicture.bind(this)}>[CAPTURE]</Text>
+          <Text style={styles.capture} onPress={this.takePicture.bind(this)}>[Upload Test]</Text>
         </Camera>
         }
       </View>
