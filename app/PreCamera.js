@@ -19,20 +19,20 @@ export default class PreCamera extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      testID: ''
+      answerKeyID: ''
     };
   }
 
-  handleSubmit(){
-    var user = this.props.user;
-    var testID = this.state.testID;
-    var data = {user: user, testID: testID};
-    Actions.CameraView(data: data);
-  }
-
   navigateToCamera(response) {
+    console.log('navigateToCamera called ----------------')
     var user = this.props.user;
-    Actions.CameraView({user: user});
+    var answerKeyID = this.state.answerKeyID;
+    var data = {
+      user: user,
+      answerKeyID: answerKeyID
+    }
+    console.log(data)
+    Actions.CameraView(data);
   }
 
   render() {
@@ -46,14 +46,14 @@ export default class PreCamera extends Component {
           keyboardType='numeric'
           underlineColorAndroid='transparent'
           maxLength={16}
-          onChangeText={(text) => this.setState({testID: text})}
+          onChangeText={(text) => this.setState({answerKeyID: text})}
           value={this.state.text}
           accessibilityLabel="Input Test ID"
         />
         <View style={styles.mediumLine}/>
         <TouchableOpacity
           style={styles.loginButton}
-          onPress={this.handleSubmit.bind(this)}
+          onPress={this.navigateToCamera.bind(this)}
           accessibilityLabel="Enter Test ID">
           <Text style={styles.loginText}>Photograph Test</Text>
         </TouchableOpacity>

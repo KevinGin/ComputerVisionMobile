@@ -20,10 +20,8 @@ export default class CameraView extends Component {
     super(props);
 
     this.state = {
-      postMode: 'TeacherKey',    // key or test
-      teacherID: 1,       // hard-coded for now
-      courseID: 1,         // hard-coded for now
-      spinner: false
+      // answerKeyID: 1,       // note: answerKeyID passed in as Props
+      spinner: false           // note: studentID passed in as Props
     };
   }
 
@@ -85,13 +83,21 @@ export default class CameraView extends Component {
       // DEV: hard-coded for DEV.
       let hardCodedURL = 'http://res.cloudinary.com/dn4vqx2gu/image/upload/v1487892182/p6ybu5bjev1nnfkpebcc.jpg'
 
+      // DEV: When server changes are made, should also pass up USER ID, not USERNAME. Hard Coded UserID for now.
+      console.log('about to upload data ---------')
+      console.log(context.props)
+      var username = this.props.user.username;
+      var answerKeyID = this.props.answerKeyID
+
 
       var data = {
         // DEV: uncomment to hard-code URL
         url: hardCodedURL,
+        AnswerKeyID: answerKeyID,
+        StudentID: 1,
         // url: imageURL,
-        TeachersID: context.state.teacherID,
-        ClassesID: this.state.courseID,
+        // TeachersID: context.state.teacherID,
+        // ClassesID: this.state.courseID,
         token: token
       }
 
@@ -119,21 +125,14 @@ export default class CameraView extends Component {
             spinner: false
           })
         })
-
-
-
-
-
-
     });
   }
 
-  handlePickerChange(value) {
-    console.log('pickerchanged')
-    this.setState({
-      postMode: value
-    })
-  }
+//For Debugging:
+  // sample() {
+  //   var context = this;
+  //   console.log(this.props)
+  // }
 
 
   fetch() {
