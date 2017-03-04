@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import Camera from 'react-native-camera';
 import Spinner from './spinner.js'
+import { Actions } from 'react-native-router-flux';
 const axios = require('axios');
 var CryptoJS = require('crypto-js');
 var Cloudinary = require('../config/cloudinary.js')
@@ -21,7 +22,7 @@ export default class CameraView extends Component {
 
     this.state = {
       // answerKeyID: 1,       // note: answerKeyID passed in as Props
-      spinner: false           // note: studentID passed in as Props
+      spinner: false,           // note: studentID passed in as Props
     };
   }
 
@@ -111,8 +112,10 @@ export default class CameraView extends Component {
       axios(config)
         .then((response) => {
           console.log('posted successfully --------------------⁄')
-          console.log(response)
-          // DEV: DISPLAY SCORE
+          var data = response.data;
+     
+          Actions.SuccessfulPost(data);
+          // remove spinner, in case user navigates back to CameraView
           context.setState({
             spinner: false
           })

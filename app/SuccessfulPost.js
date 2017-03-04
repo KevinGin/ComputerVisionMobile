@@ -4,7 +4,6 @@ import {
 	Text,
   Image,
 	StyleSheet,
-  ActivityIndicator,
   Dimensions
  } from 'react-native';
  const { width, height } = Dimensions.get('window')
@@ -12,15 +11,40 @@ import {
 
 
 export default class SuccessfulPost extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      bonus: 0
+    };
+  }
+
+  easterEgg() {
+    var context = this;
+    this.setState({
+      bonus: context.state.bonus + 1
+    })
+  }
+
+  removeEasterEgg() {
+    console.log('removeEasterEgg')
+    this.setState({
+      bonus: 0
+    })
+  }
+
   render() {
     return (
       <View style={styles.container}>
         <View style={styles.space} />
-        <Text style={styles.textMajor}>Upload Successful!</Text>
+        <Text style={styles.textMajor}
+              onPress={this.removeEasterEgg.bind(this)}>
+              Upload Successful!</Text>
         <Text style={styles.textMinor}>You received a score of: </Text>
-        <Text style={styles.textPercentage}>98%</Text>
+        <Text style={styles.textPercentage}
+              onPress={this.easterEgg.bind(this)}>{(this.props.result * 100) + this.state.bonus}%</Text>
         <Image source={require('./assets/pencil-horizontal.png')}
-           style={styles.pencil}/>
+               style={styles.pencil}
+               />
         <View style={styles.space} />
       </View>
     )
@@ -32,6 +56,7 @@ export default class SuccessfulPost extends Component {
 // '#85AF4B'
 // '#ADC986'
 // '#D3E2BD'
+// '#C9D492'
 
 const styles = StyleSheet.create({
 	container: {
@@ -66,6 +91,4 @@ const styles = StyleSheet.create({
     fontSize: 45,
     textAlign: 'center',
   }
-
-
 })
