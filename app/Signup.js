@@ -4,10 +4,12 @@ import {
 	Text,
 	TextInput,
 	StyleSheet,
-  Button
+  TouchableOpacity,
+  Dimensions
 } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 const axios = require('axios')
+const { width, height } = Dimensions.get('window')
 
 // import PageTwo from './PageTwo';
 
@@ -52,32 +54,36 @@ export default class Signup extends Component {
     Actions.CameraView({user: user});
   }
 
-
   render() {
     return (
       <View style={styles.container}>
         <View style={styles.space}/>
         <TextInput
-          style={styles.input}
+          style={[styles.input, styles.inputTop]}
           placeholder="Username"
+          underlineColorAndroid='transparent'
+          maxLength={16}
           onChangeText={(text) => this.setState({username: text})}
           accessibilityLabel="Input Username"
         />
+        <View style={styles.thinLine}/>
         <TextInput
-          style={styles.input}
+          style={[styles.input, styles.inputBottom]}
           placeholder="Password"
+          underlineColorAndroid='transparent'
+          maxLength={16}
           onChangeText={(text) => this.setState({password: text})}
           value={this.state.text}
           accessibilityLabel="Input Password"
         />
-        <Button
-          style={styles.space}
+        <View style={styles.mediumLine}/>
+        <TouchableOpacity
+          style={styles.loginButton}
           onPress={this.handleSubmit.bind(this)}
-          title="Create Account"
-          color="#841584"
-          accessibilityLabel="Submit Username and Password"
-        />
-        <View style={styles.submitButton}/>
+          accessibilityLabel="Submit Username and Password">
+          <Text style={styles.loginText}>Login</Text>
+        </TouchableOpacity>
+        <View style={styles.space}/>
       </View>
     )
   }
@@ -87,16 +93,48 @@ export default class Signup extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    backgroundColor: '#ADC986',
   },
   input: {
     flex: 1,
+    left: width / 10,
+    width: width * .8,
+    backgroundColor: 'white',
+    fontSize: 18,
+    paddingLeft: 15
+
+  },
+  inputTop: {
+    borderTopLeftRadius: 4,
+    borderTopRightRadius: 4,   
+  },
+  inputBottom: {
+    borderBottomLeftRadius: 4,
+    borderBottomRightRadius: 4,
+  },
+  thinLine: {
+    height: 1,
+  },
+  mediumLine: {
+    height: 5
   },
   space: {
-    flex: 1
+    flex: 3
   },
-  submitButton: {
-    flex: 1
+  loginButton: {
+    flex: 1,
+    backgroundColor: '#85AF4B',
+    borderRadius: 4,
+    width: width * .8,
+    left: width / 10
+  },
+  loginText: {
+    fontSize: 20,
+    paddingTop: 12,
+    textAlign: 'center',
+    fontWeight: 'bold',
+    color: 'white'
   }
 });
 

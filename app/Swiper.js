@@ -32,7 +32,7 @@ var styles = {
   text: {
     color: '#fff',
     fontSize: 30,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
   }
 }
 
@@ -40,7 +40,7 @@ var styles = {
 
 
 
-export default () => <Swiper style={styles.wrapper} height={height*.86} showsButtons>
+export default () => <Swiper style={styles.wrapper} height={height*.86} autoplay showsButtons>
   <View style={styles.slide1}>
     <Text style={styles.text}>Take Test.</Text>
   </View>
