@@ -35,11 +35,11 @@ export default class PreCamera extends Component {
     Actions.CameraView({user: user});
   }
 
-
   render() {
     return (
       <View style={styles.container}>
         <View style={styles.space}/>
+        <Text style={styles.studentID}>Welcome! Your userID is: {this.props.user.userID}</Text>
         <TextInput
           style={[styles.inputTestID]}
           placeholder="Enter Test ID"
@@ -78,6 +78,10 @@ const styles = StyleSheet.create({
     fontSize: 18,
     paddingLeft: 15,
     borderRadius: 4
+  },
+  studentID: {
+    textAlign: 'center',
+    paddingBottom: 10,
   },
   space: {
     flex: 3

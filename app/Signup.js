@@ -62,7 +62,7 @@ export default class Signup extends Component {
     // console.log('navigateToCamera called')
     // console.log(response.data);
     var user = response.data;
-    Actions.PreCamera({user: user});
+    Actions.PreCamera(user);
   }
 
   render() {
