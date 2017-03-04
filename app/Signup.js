@@ -28,7 +28,7 @@ export default class Signup extends Component {
   handleSubmit() {
     console.log('handleSubmit')
     var context = this;
-    this.registerUser(context.navigateToCamera); // good candidate to Promisify
+    this.registerUser(context.navigateToPreCamera); // good candidate to Promisify
   }
 
   registerUser(callback) {
@@ -38,6 +38,7 @@ export default class Signup extends Component {
 
     axios.post(url, userData)
     .then(function(response) {
+       console.log( 'response ------------------', response.data)
        var token = response.data.token
        AsyncStorage.setItem('@teachersPetToken', token, (err, data) => {
         if (err) {
@@ -57,11 +58,11 @@ export default class Signup extends Component {
     });
   }
 
-  navigateToCamera(response) {
+  navigateToPreCamera(response) {
     // console.log('navigateToCamera called')
     // console.log(response.data);
     var user = response.data;
-    Actions.CameraView({user: user});
+    Actions.PreCamera({user: user});
   }
 
   render() {

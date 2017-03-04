@@ -28,7 +28,7 @@ export default class Login extends Component {
   handleSubmit() {
     console.log('handleSubmit')
     var context = this;
-    this.loginUser(context.navigateToCamera); // good candidate to Promisify
+    this.loginUser(context.navigateToPreCamera); // good candidate to Promisify
   }
 
   loginUser(callback) {
@@ -59,11 +59,11 @@ export default class Login extends Component {
     });
   }
 
-  navigateToCamera(response) {
+  navigateToPreCamera(response) {
     // console.log('navigateToCamera called')
     // console.log(response.data);
     var user = response.data;
-    Actions.CameraView({user: user});
+    Actions.PreCamera({user: user});
   }
 
 
