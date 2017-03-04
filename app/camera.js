@@ -86,7 +86,6 @@ export default class CameraView extends Component {
 
       // DEV: When server changes are made, should also pass up USER ID, not USERNAME. Hard Coded UserID for now.
       console.log('about to upload data ---------')
-      console.log(context.props)
       var username = this.props.user.username;
       var answerKeyID = this.props.answerKeyID
 
@@ -99,7 +98,7 @@ export default class CameraView extends Component {
         // url: imageURL,
         // TeachersID: context.state.teacherID,
         // ClassesID: this.state.courseID,
-        token: token
+        token: 'abc'
       }
 
       var config = {
@@ -113,7 +112,6 @@ export default class CameraView extends Component {
         .then((response) => {
           console.log('posted successfully --------------------⁄')
           var data = response.data;
-     
           Actions.SuccessfulPost(data);
           // remove spinner, in case user navigates back to CameraView
           context.setState({
@@ -122,8 +120,8 @@ export default class CameraView extends Component {
         })
         .catch((err) => {
           console.log('catch called -------------------------')
-          console.log(err)
-          // DEV: DISPLAY ERROR MESSAGE
+          Actions.FailedToPost(data);
+          // remove spinner, since user will navigate back
           context.setState({
             spinner: false
           })
