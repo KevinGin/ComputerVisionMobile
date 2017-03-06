@@ -8,3 +8,14 @@
 	"We can't wait to see your grade either..."
 7. Add Product Name in imported font to multiple scenes.
 8. When Fail -- get reason from server and display to user.
+
+9. Message for failed login
+
+10. On SignUp, enter firstName, lastName; along with userName and passWord.
+11. Capitalize Camera component.
+
+12. Error Handling: If Token Expired, route back to Login.
+
+
+
+Later: Uncode Hard-coded Data.

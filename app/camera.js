@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import Camera from 'react-native-camera';
 import Spinner from './spinner.js'
+import Preview from './preview.js'
 import { Actions } from 'react-native-router-flux';
 const axios = require('axios');
 var CryptoJS = require('crypto-js');
@@ -21,8 +22,10 @@ export default class CameraView extends Component {
     super(props);
 
     this.state = {
-      // answerKeyID: 1,       // note: answerKeyID passed in as Props
-      spinner: false,           // note: studentID passed in as Props
+      // answerKeyID: 1,       // note: answerKeyID, studentID passed in as Props
+      spinner: false,
+      preview: false,
+      cloudinaryData: {},
     };
   }
 
@@ -30,17 +33,18 @@ export default class CameraView extends Component {
     var context = this;
     this.camera.capture()
       .then((data) => {
-        console.log('picture taken')
+        console.log('picture taken --------------------')
         context.setState({
           spinner: true
         })
+        console.log('should have gone to spinner -------------')
         // DEVNOTE: commented out during dev so don't make unnecessary API requests
-        context.uploadImage(data.path, context.postToServer.bind(context));
+        context.uploadImage(data.path);
       })
       .catch(err => console.error(err));
   }
 
-  uploadImage(uri, postToServer) {
+  uploadImage(uri) {
     console.log('uploading image to Cloudinary -------------------')
     var context = this;
     // DEV NOTE: On future iterations, we can upload without an API Key (and without hashing it with our secret)
@@ -56,9 +60,23 @@ export default class CameraView extends Component {
     let xhr = new XMLHttpRequest();
     xhr.open('POST', upload_url);
     xhr.onload = (data) => {
-      console.log('onload called')
-      // callback is postToServer
-      postToServer(data)
+      console.log('onload called -------------------------')
+
+      var response = data.target._response;
+      var username = this.props.user.username;
+      var answerKeyID = this.props.answerKeyID
+
+      Actions.Preview({
+        cloudinaryResponse:response,
+        username: username,
+        answerKeyID: answerKeyID
+      })
+
+      // set state in case user navigates back to CameraView
+      context.setState({
+        spinner: false,
+      })
+
     };
     let formdata = new FormData();
     formdata.append('file', {uri: uri, type: 'image/jpg', name: 'upload.jpg'});
@@ -69,65 +87,7 @@ export default class CameraView extends Component {
   }
 
 
-  postToServer(cloudinaryData) {
-    var context = this;
-    console.log('posting to server ------------------------')
-    // Fetch Web Token Asyc
-    AsyncStorage.getItem('@teachersPetToken', (err, token) => {
-      console.log('fetched ====> ')
-      console.log(token)
-
-      var responseString = cloudinaryData.target._response;
-      var responseObject = JSON.parse(responseString);
-      var imageURL = responseObject.url
-
-      // DEV: hard-coded for DEV.
-      let hardCodedURL = 'http://res.cloudinary.com/dn4vqx2gu/image/upload/v1487892182/p6ybu5bjev1nnfkpebcc.jpg'
-
-      // DEV: When server changes are made, should also pass up USER ID, not USERNAME. Hard Coded UserID for now.
-      console.log('about to upload data ---------')
-      var username = this.props.user.username;
-      var answerKeyID = this.props.answerKeyID
-
-
-      var data = {
-        // DEV: uncomment to hard-code URL
-        url: hardCodedURL,
-        AnswerKeyID: answerKeyID,
-        StudentID: 1,
-        // url: imageURL,
-        // TeachersID: context.state.teacherID,
-        // ClassesID: this.state.courseID,
-        token: 'abc'
-      }
-
-      var config = {
-        method: 'post',
-        data: data,
-        url: 'http://10.7.24.223:8080/api/addTest'
-      }
-
-
-      axios(config)
-        .then((response) => {
-          console.log('posted successfully --------------------⁄')
-          var data = response.data;
-          Actions.SuccessfulPost(data);
-          // remove spinner, in case user navigates back to CameraView
-          context.setState({
-            spinner: false
-          })
-        })
-        .catch((err) => {
-          console.log('catch called -------------------------')
-          Actions.FailedToPost(data);
-          // remove spinner, since user will navigate back
-          context.setState({
-            spinner: false
-          })
-        })
-    });
-  }
+  
 
 //For Debugging:
   // sample() {
@@ -145,7 +105,7 @@ export default class CameraView extends Component {
     return (
       <View style={styles.container}>
         {this.state.spinner ? 
-          <Spinner></Spinner> : 
+          <Spinner></Spinner> :
           <Camera
           ref={(cam) => {
             this.camera = cam;
@@ -161,7 +121,8 @@ export default class CameraView extends Component {
           </View>
           
           <View style={styles.outline}></View>
-          <Text style={styles.capture} onPress={this.takePicture.bind(this)}>   [Upload]   </Text>
+          <Text style={styles.capture} onPress={this.takePicture.bind(this)}>   [Snap Photo
+          ]   </Text>
         </Camera>
         }
       </View>
