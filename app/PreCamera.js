@@ -39,7 +39,7 @@ export default class PreCamera extends Component {
     return (
       <View style={styles.container}>
         <View style={styles.space}/>
-        <Text style={styles.studentID}>Welcome! Your userID is: {this.props.user.id}</Text>
+        <Text style={styles.studentID}>Welcome! Your User ID is: {(this.props.user.id).toString(4)}</Text>
         <TextInput
           style={[styles.inputTestID]}
           placeholder="Enter Test ID"
