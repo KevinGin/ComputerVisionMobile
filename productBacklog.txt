@@ -1,21 +1,26 @@
-1. Hide Password when user enters it
+
+8. On SignUp, enter firstName, lastName; along with userName and passWord.
+7. Message for failed login
+
+
 2. RegEx on all user inputs
 
-
-5. Pencil images, multiple sizes
-6. On Spinner Page, randomly choose a phrase.
+3. Pencil images, multiple sizes
+4. On Spinner Page, randomly choose a phrase.
 	"I bet you totally aced it"
 	"We can't wait to see your grade either..."
-7. Add Product Name in imported font to multiple scenes.
-8. When Fail -- get reason from server and display to user.
-
-9. Message for failed login
-
-10. On SignUp, enter firstName, lastName; along with userName and passWord.
-11. Capitalize Camera component.
-
-12. Error Handling: If Token Expired, route back to Login.
+5. Add Product Name in imported font to multiple scenes.
+6. When Fail -- get reason from server and display to user.
 
 
+
+
+9. Capitalize Camera component.
+
+10. Error Handling: If Token Expired, route back to Login.
+
+11. Dismiss Keyboard.
+
+--> Show Password Option for SignUp
 
 Later: Uncode Hard-coded Data.

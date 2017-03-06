@@ -85,6 +85,7 @@ export default class Login extends Component {
           placeholder="Password"
           underlineColorAndroid='transparent'
           maxLength={16}
+          secureTextEntry
           onChangeText={(text) => this.setState({password: text})}
           value={this.state.text}
           accessibilityLabel="Input Password"
