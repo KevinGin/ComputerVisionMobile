@@ -25,7 +25,7 @@ export default class Landing extends Component {
           </TouchableOpacity>
         	<TouchableOpacity
             style={styles.button}
-            onPress= {Actions.Signup}>
+            onPress= {Actions.PreSignup}>
             <Text style={styles.buttonText}> Sign Up</Text>
           </TouchableOpacity>
         </View>
@@ -55,7 +55,6 @@ const styles = StyleSheet.create({
 
   button: {
     flex: 1,
-    // flexDirection: 'column'
   },
 
   buttonText: {

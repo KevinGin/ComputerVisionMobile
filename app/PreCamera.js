@@ -24,8 +24,8 @@ export default class PreCamera extends Component {
   }
 
   navigateToCamera(response) {
-    console.log('navigateToCamera called ----------------')
     var user = this.props.user;
+    console.log('user =>', user)
     var answerKeyID = this.state.answerKeyID;
     var data = {
       user: user,
@@ -39,7 +39,7 @@ export default class PreCamera extends Component {
     return (
       <View style={styles.container}>
         <View style={styles.space}/>
-        <Text style={styles.studentID}>Welcome! Your userID is: {this.props.user.userID}</Text>
+        <Text style={styles.studentID}>Welcome! Your userID is: {this.props.user.id}</Text>
         <TextInput
           style={[styles.inputTestID]}
           placeholder="Enter Test ID"
@@ -63,6 +63,8 @@ export default class PreCamera extends Component {
   }
 }
 
+
+        
 
 const styles = StyleSheet.create({
   container: {
@@ -104,3 +106,6 @@ const styles = StyleSheet.create({
     color: 'white'
   }
 });
+
+// <Text style={styles.studentID}>Welcome! Your userID is: {this.props.user.userID}</Text>
+

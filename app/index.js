@@ -5,6 +5,7 @@ import Landing from './Landing';
 import PageTwo from './PageTwo';
 import CameraView from './camera';
 import Preview from './preview';
+import PreSignup from './PreSignup';
 import Signup from './Signup';
 import Login from './Login';
 import PreCamera from './PreCamera';
@@ -19,6 +20,7 @@ export default class App extends Component {
         <Scene key="root">
           <Scene key="Landing" component={Landing} title="Teacher's Pet: Student" hideNavBar initial={true}/>
           <Scene key="CameraView" component={CameraView} title="Camera" hideNavBar />
+          <Scene key="PreSignup" component={PreSignup} title="PreSignup" />
           <Scene key="Signup" component={Signup} title="Signup" />
           <Scene key="Login" component={Login} title="Login" />
           <Scene key="PreCamera" component={PreCamera} title="PreCamera" />

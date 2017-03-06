@@ -1,6 +1,12 @@
 
-8. On SignUp, enter firstName, lastName; along with userName and passWord.
+
 7. Message for failed login
+
+- Message for failed USERNAME creation.
+  - Username Taken
+  - Password Invalid
+  - RegEx stuff
+
 
 
 2. RegEx on all user inputs
