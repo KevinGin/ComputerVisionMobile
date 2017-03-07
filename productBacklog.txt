@@ -1,11 +1,7 @@
 
 
-7. Message for failed login
 
-- Message for failed USERNAME creation.
-  - Username Taken
-  - Password Invalid
-  - RegEx stuff
+-Add more spinners (login, signup, grading test)
 
 
 

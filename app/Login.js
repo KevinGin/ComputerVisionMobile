@@ -12,26 +12,24 @@ import { Actions } from 'react-native-router-flux';
 const axios = require('axios')
 const { width, height } = Dimensions.get('window')
 
-// import PageTwo from './PageTwo';
-
-
 export default class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
       username: '',
       password: '',
-      TeacherID: 1   //DevNote: TeacherID to be taken out after controller/db change.
-    };
+      errorText: ''
+    }
   }
 
   handleSubmit() {
     console.log('handleSubmit')
     var context = this;
-    this.loginUser(context.navigateToPreCamera); // good candidate to Promisify
+    this.loginUser(context.navigateToPreCamera.bind(this)); // good candidate to Promisify
   }
 
   loginUser(callback) {
+    var context = this;
     console.log('loginUser called')
     var userData = this.state;
     var url = 'http://10.7.24.223:8080/auth/student/login'
@@ -42,26 +40,29 @@ export default class Login extends Component {
       console.log(token)
       AsyncStorage.setItem('@teachersPetToken', token, (err, data) => {
         if (err) {
-          // DEV: Handle error storing token
-          console.log(err)
+          context.setState({
+            errorText: 'Sorry, unable to store token on your device. Please try again.'
+          })
         } else {
-          console.log('store token success')
-          console.log(data)
+          // navigate to PreCamera
           callback(response)
         }
       })
     })
     .catch(function (error) {
-      // DEV: RENDER ERROR MESSAGE TO USER
-      // console.log(error);
-      console.log('error caught from post ----------------');
-      console.log(error)
+      console.log('CATCH CALLED ================================================')
+      context.setState({
+        errorText: 'Invalid username or password.',
+        password: ''
+      })
     });
   }
 
   navigateToPreCamera(response) {
-    // console.log('navigateToCamera called')
-    // console.log(response.data);
+    this.setState({
+      errorText: '',
+      password: ''
+    })
     var user = response.data;
     Actions.PreCamera(user);
   }
@@ -97,6 +98,7 @@ export default class Login extends Component {
           accessibilityLabel="Submit Username and Password">
           <Text style={styles.loginText}>Login</Text>
         </TouchableOpacity>
+        <Text style={styles.errorText}>{this.state.errorText}</Text>
         <View style={styles.space}/>
       </View>
     )
@@ -150,5 +152,12 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontWeight: 'bold',
     color: 'white'
+  },
+  errorText: {
+    color: 'red',
+    fontSize: 16,
+    textAlign: 'center',
+    width: width * .8,
+    left: width * .1,
   }
 });

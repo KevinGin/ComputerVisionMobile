@@ -28,7 +28,6 @@ export default class Signup extends Component {
   handleSubmit() {
     console.log('handleSubmit')
     var context = this;
-    console.log(context.props.firstName);
     this.registerUser(); // good candidate to Promisify
   }
 
@@ -47,18 +46,22 @@ export default class Signup extends Component {
        var token = response.data.token
        AsyncStorage.setItem('@teachersPetToken', token, (err, data) => {
         if (err) {
-          // DEV: Handle error storing token
-          console.log(err)
+          context.setState({
+            errorText: 'Sorry, unable to store token on your device. Please try again.'
+          })
         } else {
-          console.log('store token success ======================>')
-          console.log(userData)
           // Navigate to Precamera
           Actions.PreCamera(response.data)
-          // context.navigateToPrecamera(data)
+          // remove errorText, if it exists, in case user navigates back
+          context.setState({
+            errorText: '',
+            password: '',
+          })
         }
       })
     })
     .catch(function(error) {
+      console.log('CATCH CALLED')
       context.setState({
         errorText: 'Sorry, the username you are looking for is already taken.'
       })
