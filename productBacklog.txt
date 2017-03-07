@@ -1,28 +1,20 @@
+- RegEx on all user inputs
 
+-Add more spinners (login, signup)
+-Error Handling
+  - More specific messages when login fails
+  - If token expires, route back to login (reach: renew tokens before expiring)
 
+-Remove Keyboard after "Submit" on PreCamera
 
--Add more spinners (login, signup, grading test)
+-Require Username/Password to be certain length, characters
 
+- Make pencil images multiple sizes, for different screens
 
+- Add Product Name in imported font to multiple scenes.
 
-2. RegEx on all user inputs
-
-3. Pencil images, multiple sizes
-4. On Spinner Page, randomly choose a phrase.
+- On Spinner Page, randomly choose a phrase.
 	"I bet you totally aced it"
 	"We can't wait to see your grade either..."
-5. Add Product Name in imported font to multiple scenes.
-6. When Fail -- get reason from server and display to user.
 
-
-
-
-9. Capitalize Camera component.
-
-10. Error Handling: If Token Expired, route back to Login.
-
-11. Dismiss Keyboard.
-
---> Show Password Option for SignUp
-
-Later: Uncode Hard-coded Data.
+Before Deployment: Remove hard-coded cloudURL
