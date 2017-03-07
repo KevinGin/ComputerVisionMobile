@@ -3,8 +3,8 @@ import { Router, Scene } from 'react-native-router-flux';
 
 import Landing from './Landing';
 import PageTwo from './PageTwo';
-import CameraView from './camera';
-import Preview from './preview';
+import CameraView from './Camera';
+import Preview from './Preview';
 import PreSignup from './PreSignup';
 import Signup from './Signup';
 import Login from './Login';

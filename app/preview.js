@@ -10,7 +10,7 @@ import {
   AsyncStorage
 } from 'react-native';
 import Camera from 'react-native-camera';
-import Spinner from './spinner.js';
+import Spinner from './Spinner.js';
 import { Actions } from 'react-native-router-flux';
 import SuccessfulPost from './SuccessfulPost.js'
 const axios = require('axios');

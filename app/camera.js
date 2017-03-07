@@ -8,8 +8,8 @@ import {
   AsyncStorage
 } from 'react-native';
 import Camera from 'react-native-camera';
-import Spinner from './spinner.js'
-import Preview from './preview.js'
+import Spinner from './Spinner.js'
+import Preview from './Preview.js'
 import { Actions } from 'react-native-router-flux';
 const axios = require('axios');
 var CryptoJS = require('crypto-js');
