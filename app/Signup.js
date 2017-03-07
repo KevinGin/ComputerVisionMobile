@@ -21,6 +21,7 @@ export default class Signup extends Component {
     this.state = {
       username: '',
       password: '',
+      errorText: '',
     };
   }
 
@@ -58,9 +59,9 @@ export default class Signup extends Component {
       })
     })
     .catch(function(error) {
-      // DEV: RENDER ERROR MESSAGE TO USER
-      console.log(error);
-      console.log('error caught from post ------------');
+      context.setState({
+        errorText: 'Sorry, the username you are looking for is already taken.'
+      })
     });
   }
 
@@ -104,6 +105,7 @@ export default class Signup extends Component {
           accessibilityLabel="Create Account">
           <Text style={styles.loginText}>Create Account</Text>
         </TouchableOpacity>
+        <Text style={styles.errorText}>{this.state.errorText}</Text>
         <View style={styles.space}/>
       </View>
     )
@@ -156,6 +158,13 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontWeight: 'bold',
     color: 'white'
+  },
+  errorText: {
+    color: 'red',
+    fontSize: 16,
+    textAlign: 'center',
+    width: width * .8,
+    left: width * .1,
   }
 });
 
