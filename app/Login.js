@@ -31,7 +31,12 @@ export default class Login extends Component {
   loginUser(callback) {
     var context = this;
     console.log('loginUser called')
-    var userData = this.state;
+    var userData = {
+      username: this.state.username,
+      password: this.state.password,
+    }
+
+    console.log(userData)
     var url = 'http://10.7.24.223:8080/auth/student/login'
 
     axios.post(url, userData)
@@ -45,6 +50,7 @@ export default class Login extends Component {
           })
         } else {
           // navigate to PreCamera
+          console.log('about to navigate to PreCamera')
           callback(response)
         }
       })
@@ -59,6 +65,7 @@ export default class Login extends Component {
   }
 
   navigateToPreCamera(response) {
+    console.log('navigate to precamera')
     this.setState({
       errorText: '',
       password: ''

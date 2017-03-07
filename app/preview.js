@@ -21,7 +21,15 @@ const { width, height } = Dimensions.get('window')
 export default class Preview extends Component {
   constructor(props) {
     super(props);
+    this.state = {    // note: answerKeyID, studentID passed in as Props
+      spinner: false,
+      majorMessage: 'hello',
+      minorMessage: 'world'
+    };
   }
+
+
+
 
   discardImage() {
     Actions.pop();
@@ -36,6 +44,13 @@ export default class Preview extends Component {
 
 
   postToServer(cloudURL) {
+    this.setState({
+      spinner: true,
+      majorMessage: 'Grading Test',
+      minorMessage: 'We bet you aced it...'
+    })
+
+
     var context = this;
     console.log('posting to server ------------------------')
     // Fetch Web Token Asyc
@@ -69,11 +84,18 @@ export default class Preview extends Component {
         .then((response) => {
           console.log('posted successfully --------------------⁄')
           var data = response.data;
+          this.setState({
+            spinner: false,
+          })
           Actions.SuccessfulPost(data);
 
         })
         .catch((err) => {
           console.log('catch called -------------------------')
+          this.setState({
+            spinner: false,
+          })
+
           Actions.FailedToPost(data);
         })
     });
@@ -82,27 +104,32 @@ export default class Preview extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <View style={styles.space}></View>
-        <Image source={{uri: 'http://res.cloudinary.com/dn4vqx2gu/image/upload/v1487892182/p6ybu5bjev1nnfkpebcc.jpg'}}
-               style={styles.image} />
-        <View style={styles.buttonContainer}>
+        {this.state.spinner ? 
+          <Spinner majorMessage={this.state.majorMessage} minorMessage={this.state.minorMessage}></Spinner> :
+          <View>
           <View style={styles.space}></View>
-          <TouchableOpacity
-            style={styles.button}
-            onPress={this.discardImage.bind(this)}>
-            <Text style={styles.goBackText}> {'\<-- Discard'}</Text>
-          </TouchableOpacity>
+          <Image source={{uri: 'http://res.cloudinary.com/dn4vqx2gu/image/upload/v1487892182/p6ybu5bjev1nnfkpebcc.jpg'}}
+                 style={styles.image} />
+          <View style={styles.buttonContainer}>
+            <View style={styles.space}></View>
+            <TouchableOpacity
+              style={styles.button}
+              onPress={this.discardImage.bind(this)}>
+              <Text style={styles.goBackText}> {'\<-- Discard'}</Text>
+            </TouchableOpacity>
+            <View style={styles.space}></View>
+            <TouchableOpacity
+              style={styles.button}
+              onPress={this.useImage.bind(this)}>
+              <Text style={styles.submitText}>Submit Test</Text>
+            </TouchableOpacity>
+            <View style={styles.space}></View>
+          </View>
           <View style={styles.space}></View>
-          <TouchableOpacity
-            style={styles.button}
-            onPress={this.useImage.bind(this)}>
-            <Text style={styles.submitText}>Submit Test</Text>
-          </TouchableOpacity>
-          <View style={styles.space}></View>
-        </View>
-        <View style={styles.space}></View>
+          </View>
+        }
       </View>
-    )
+    );
   }
 }
 

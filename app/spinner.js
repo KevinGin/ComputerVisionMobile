@@ -24,8 +24,8 @@ export default class Spinner extends Component {
     return (
       <View style={styles.container}>
         <View style={styles.space} />
-        <Text style={styles.textMajor}>Uploading Image</Text>
-        <Text style={styles.textMinor}>We bet you aced it...</Text>
+        <Text style={styles.textMajor}>{this.props.majorMessage}</Text>
+        <Text style={styles.textMinor}>{this.props.minorMessage}</Text>
         <ActivityIndicator
           style={styles.indicator}
           size={50}

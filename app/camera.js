@@ -24,8 +24,8 @@ export default class CameraView extends Component {
     this.state = {
       // answerKeyID: 1,       // note: answerKeyID, studentID passed in as Props
       spinner: false,
-      preview: false,
-      cloudinaryData: {},
+      majorMessage: '',
+      minorMessage: ''
     };
   }
 
@@ -35,6 +35,8 @@ export default class CameraView extends Component {
       .then((data) => {
         console.log('picture taken --------------------')
         context.setState({
+          majorMessage: 'Uploading Image',
+          minorMessage: 'Let\s do this!',
           spinner: true
         })
         console.log('should have gone to spinner -------------')
@@ -105,7 +107,7 @@ export default class CameraView extends Component {
     return (
       <View style={styles.container}>
         {this.state.spinner ? 
-          <Spinner></Spinner> :
+          <Spinner majorMessage={this.state.majorMessage} minorMessage={this.state.minorMessage}></Spinner> :
           <Camera
           ref={(cam) => {
             this.camera = cam;
